@@ -31,5 +31,8 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "flatpickr": "^4.6.6",
+    "moment": "^2.28.0"
+  }
 }

@@ -1,13 +1,72 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en" dir="ltr">
   <head>
-    <title>Webpack Starter Kit</title>
+    <meta charset="utf-8">
+    <title>Travel Tracker</title>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sulphur+Point:400,700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <h1>Webpack Starter Kit</h1>
-
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
-
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+    <section class="user-view" role="main">
+      <header class="main-header">
+          <h1 class="travel-tracker-logo">Travel Tracker</h1>
+          <h1 class="welcome-header">Welcome</h1>
+          <button type="button" class="sign-out-button" name="sign-out-button">Sign Out</button>
+      </header>
+      <header class="header-2">
+        <section class="year-travel-cost-widget" aria->
+          <h3 class="year-travel-cost-title">Year to Date Travel Cost</h3>
+          <p class="year-travel-Cost-Amount">$$$<p>
+        </section>
+        <h1 class="page-view-header">Trip History</h1>
+        <button class="plan-new-trip-button" type="button" name="button">Plan New Trip</button>
+        <button class="view-trip-history button hidden" type="button" name="button"></button>
+      </header>
+      <section class="trip-history-view">
+        <nav class="trip-by-time-button-navigator">
+          <button class="view-past-trips-button" type="button" name="past-trips-button">Past Trips</button>
+          <button class="view-present-trips-button" type="button" name="present-trips-button">Present Trips</button>
+          <button class="view-future-trips-button" type="button" name="future-trips-button">Future Trips</button>
+          <button class="view-pending-trips-button" type="button" name="pending-trips-button">Pending Trips</button>
+        </nav>
+        <section class="trip-card-grid">
+        </section>
+      </section>
+      <section class="plan-new-trip-view hidden">
+        <form class="plan-new-trip form" action="index.html" method="post">
+          <h3>Enter Start Date of Trip</h3>
+          <input class="date-picker-input" type="text" name="" value="">
+          <h3>Enter Duration of Trip (days)</h3>
+          <input class="trip-duration-input" type="text" name="" value="">
+          <h3>Enter Number of Travelers</h3>
+          <input class="number-of-travelers-input" type="text" name="" value="">
+          <h3>Select Destination</h3>
+          <select class="destination-selector" name="destination-selection-dropdown">
+          </select>
+          <section class="trip-cost-estimation-widget">
+            <h3>Estimated Trip Costs</h3>
+            <table>
+              <th>Trip Cost:</th>
+              <td class="new-trip-cost">$$$</td>
+              <th>Agent Fee:</th>
+              <td class="new-trip-agent-fee">$$$</td>
+              <th>Trip Total:</th>
+              <td class="new-trip-total">$$$</td>
+            </table>
+          </section>
+          <button class="submit-trip-button" type="button" name="button">Submit Trip</button>
+        </form>
+      </section>
+    </section>
+    <section class="log-in-page-view hidden" role="main">
+      <h1>Travel Tracker: The Cosmopolitan's Favorite Trip Tracking Tool</h1>
+      <form class="log-in-form" action="index.html" method="post">
+        <h3>Enter Your Username</h3>
+        <input class="username-input" type="text" name="" value="">
+        <h3>Enter Your Password</h3>
+        <input class="password-input" type="text" name="" value="">
+        <button class="log-in-button" type="button" name="button">Click to Sign In</button>
+      </form>
+    </section>
   </body>
 </html>
