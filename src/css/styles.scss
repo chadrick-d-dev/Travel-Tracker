@@ -1,0 +1,171 @@
+@import 'variables';
+@import 'mixins';
+@import 'inherit';
+$primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+;
+
+body {
+  background: $primary-background;
+  @extend %full-page;
+  font-family: $default-body-font-family;
+}
+
+.hidden {
+  display: none;
+}
+// ******* USER VIEW ******* //
+.user-view {
+  @extend %full-page;
+  display: grid;
+  grid-template-rows: 1fr 2fr 7fr;
+  grid-template-columns: 1fr;
+}
+
+// ******* Main Header ******* //
+.main-header {
+  @extend %flex-header;
+  @extend %border;
+  @extend %page-padding;
+  height: 100%;
+  border-bottom-style: none;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  .travel-tracker-title {
+    @extend %header-h1;
+  }
+  .welcome-banner {
+    @extend %header-h1;
+    text-align: center;
+  }
+  button {
+    @extend %buttons;
+    width: $header-side-item-width;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}
+// ******* View Header ******* //
+.view-header {
+  @extend %flex-header;
+  @extend %border;
+  @extend %page-padding;
+  height:100%;
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  .year-travel-cost-widget {
+    @extend %centered-flex;
+    width: $header-side-item-width;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-right: 5px;
+    padding-left: 5px;
+    border-style: inset;
+    border-color: black;
+    .year-travel-cost-title {
+      @extend %top-bottom-small-margin;
+      font-size: 30px;
+      text-align: center;
+    }
+    .year-travel-cost-amount {
+      @extend %top-bottom-small-margin;
+      font-size: 25px;
+    }
+  }
+  .page-view-title {
+    @extend %header-h1;
+  }
+  .plan-new-trip-button {
+    @extend %buttons;
+    width: $header-side-item-width;
+  }
+}
+
+
+// ******* Trip History View ******* //
+.trip-history-view {
+  display: flex;
+  flex-direction: row;
+  grid-row: 3 / 4;
+  grid-column: 1 / 2;
+  .trip-by-time-button-navigator {
+    width: 150px;
+    height: 100%;
+    .nav-button {
+      @extend %buttons;
+      width: 200px;
+      margin-top: 50px;
+    }
+    .view-past-trips-button {
+
+    }
+    .view-present-trips-button {
+
+    }
+    .view-future-trips-button {
+
+    }
+    .view-pending-trips-button {
+
+    }
+  }
+}
+
+// ******* Plan New Trip View ******* //
+.plan-new-trip-view {
+  @extend %centered-flex;
+  grid-row: 3 / 4;
+  grid-column: 1 / 2;
+  .plan-new-trip-form {
+    @extend %centered-flex;
+    margin-top: 75px;
+    h3 {
+      font-size: 30px;
+      @extend %top-bottom-small-margin;
+    }
+    input {
+      @extend %form-inputs;
+    }
+    select {
+      @extend %form-inputs;
+    }
+    .trip-cost-estimation-widget {
+      table {
+        @extend %centered-flex;
+        flex-direction: column;
+        font-size: 25px;
+      }
+    }
+    button {
+      @extend %buttons;
+    }
+  }
+}
+
+// ******* Sign In Page View ******* //
+.sign-in-page-view{
+  @extend %centered-flex;
+  height: 100%;
+  h1 {
+    width: 300px;
+    font-size: 50px;
+    text-align: center;
+  }
+  .sign-in-form {
+    @extend %centered-flex;
+    @extend %border;
+    justify-content: center;
+    padding: 25px;
+    h3 {
+      font-size: 30px;
+      @extend %top-bottom-small-margin;
+    }
+    input {
+      @extend %form-inputs;
+      @extend %top-bottom-small-margin;
+    }
+    button {
+      @extend %buttons;
+      @extend %top-bottom-small-margin;
+    }
+  }
+}

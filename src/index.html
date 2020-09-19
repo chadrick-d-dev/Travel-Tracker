@@ -7,33 +7,34 @@
     <link href="https://fonts.googleapis.com/css?family=Sulphur+Point:400,700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <section class="user-view" role="main">
+    <section class="user-view">
       <header class="main-header">
-          <h1 class="travel-tracker-logo">Travel Tracker</h1>
-          <h1 class="welcome-header">Welcome</h1>
+          <h1 class="travel-tracker-title">Travel Tracker</h1>
+          <h1 class="welcome-banner">Welcome</h1>
           <button type="button" class="sign-out-button" name="sign-out-button">Sign Out</button>
       </header>
-      <header class="header-2">
+      <header class="view-header">
         <section class="year-travel-cost-widget" aria->
           <h3 class="year-travel-cost-title">Year to Date Travel Cost</h3>
-          <p class="year-travel-Cost-Amount">$$$<p>
+          <p class="year-travel-cost-amount">$$$<p>
         </section>
-        <h1 class="page-view-header">Trip History</h1>
+        <h1 class="page-view-title">Trip History</h1>
         <button class="plan-new-trip-button" type="button" name="button">Plan New Trip</button>
         <button class="view-trip-history button hidden" type="button" name="button"></button>
       </header>
-      <section class="trip-history-view">
+      <section class="trip-history-view hidden">
         <nav class="trip-by-time-button-navigator">
-          <button class="view-past-trips-button" type="button" name="past-trips-button">Past Trips</button>
-          <button class="view-present-trips-button" type="button" name="present-trips-button">Present Trips</button>
-          <button class="view-future-trips-button" type="button" name="future-trips-button">Future Trips</button>
-          <button class="view-pending-trips-button" type="button" name="pending-trips-button">Pending Trips</button>
+          <button class="view-past-trips-button nav-button" type="button" name="past-trips-button">Past Trips</button>
+          <button class="view-present-trips-button nav-button" type="button" name="present-trips-button">Present Trips</button>
+          <button class="view-future-trips-button nav-button" type="button" name="future-trips-button">Future Trips</button>
+          <button class="view-pending-trips-button nav-button" type="button" name="pending-trips-button">Pending Trips</button>
         </nav>
         <section class="trip-card-grid">
+
         </section>
       </section>
       <section class="plan-new-trip-view hidden">
-        <form class="plan-new-trip form" action="index.html" method="post">
+        <form class="plan-new-trip-form" action="index.html" method="post">
           <h3>Enter Start Date of Trip</h3>
           <input class="date-picker-input" type="text" name="" value="">
           <h3>Enter Duration of Trip (days)</h3>
@@ -46,25 +47,31 @@
           <section class="trip-cost-estimation-widget">
             <h3>Estimated Trip Costs</h3>
             <table>
-              <th>Trip Cost:</th>
-              <td class="new-trip-cost">$$$</td>
-              <th>Agent Fee:</th>
-              <td class="new-trip-agent-fee">$$$</td>
-              <th>Trip Total:</th>
-              <td class="new-trip-total">$$$</td>
+              <tr>
+                <th>Trip Cost:</th>
+                <td class="new-trip-cost">$$$</td>
+              </tr>
+              <tr>
+                <th>Agent Fee:</th>
+                <td class="new-trip-agent-fee">$$$</td>
+              </tr>
+              <tr>
+                <th>Trip Total:</th>
+                <td class="new-trip-total">$$$</td>
+              </tr>
             </table>
           </section>
           <button class="submit-trip-button" type="button" name="button">Submit Trip</button>
         </form>
       </section>
     </section>
-    <section class="log-in-page-view hidden" role="main">
-      <h1>Travel Tracker: The Cosmopolitan's Favorite Trip Tracking Tool</h1>
-      <form class="log-in-form" action="index.html" method="post">
-        <h3>Enter Your Username</h3>
-        <input class="username-input" type="text" name="" value="">
-        <h3>Enter Your Password</h3>
-        <input class="password-input" type="text" name="" value="">
+    <section class="sign-in-page-view hidden">
+      <h1>Welcome to Travel Tracker!</h1>
+      <form class="sign-in-form" action="index.html" method="post">
+        <h3 class="log-in-header">Username</h3>
+        <input class="username-input" type="text" name="" value="Enter Username Here">
+        <h3 class="log-in-header">Password</h3>
+        <input class="password-input" type="text" name="" value="Enter Password Here">
         <button class="log-in-button" type="button" name="button">Click to Sign In</button>
       </form>
     </section>

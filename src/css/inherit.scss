@@ -1,0 +1,52 @@
+%full-page {
+  height: 100%;
+  width: 98%;
+}
+
+%flex-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+%centered-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+%border {
+  border-style: inset;
+  border-color: black;
+}
+
+%page-padding {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+%header-h1 {
+  font-size: 35px;
+  font-family: $default-body-font-family;
+  margin: 0;
+}
+
+%top-bottom-small-margin {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+%form-inputs {
+  height: 35px;
+  width: 300px;
+  font-size: 25px;
+  font-family: $default-body-font-family;
+}
+
+%buttons {
+  height: 50px;
+  font-family: $default-body-font-family;
+  font-size: 25px;
+  font-weight: bolder;
+}
