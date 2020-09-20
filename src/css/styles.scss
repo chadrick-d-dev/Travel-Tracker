@@ -88,25 +88,30 @@ body {
   grid-row: 3 / 4;
   grid-column: 1 / 2;
   .trip-by-time-button-navigator {
-    width: 150px;
-    height: 100%;
+    width: 200px;
+    height: 90%;
+    padding: 15px;
     .nav-button {
       @extend %buttons;
       width: 200px;
       margin-top: 50px;
     }
-    .view-past-trips-button {
-
-    }
-    .view-present-trips-button {
-
-    }
-    .view-future-trips-button {
-
-    }
-    .view-pending-trips-button {
-
-    }
+    // .view-past-trips-button {
+    //
+    // }
+    // .view-present-trips-button {
+    //
+    // }
+    // .view-future-trips-button {
+    //
+    // }
+    // .view-pending-trips-button {
+    //
+    // }
+  }
+  .trip-card-grid {
+    width: 100%;
+    height: 100%;
   }
 }
 
