@@ -1,12 +1,14 @@
 
 // ************ IMPORTED FILES *************** //
-// import Traveler from './traveler';
+import Traveler from './traveler.js';
+import fetcher from './fetch.js'
+import domUpdats from './domUpdates.js'
 // import Destination from './destination';
-// import Trip from './trip';
+import TripsRepo from './tripsRepo.js';
 import './css/styles.scss';
 // import domUpdates from './domUpdates'
 // ************ QUERY SELECTORS *************** //
-let welcomeBanner = document.querySelector(".welcome-banner");
+
 let signOutButton = document.querySelector(".sign-out-button");
 let yearTravelCostAmount = document.querySelector(".year-travel-cost-amount");
 let pageViewTitle = document.querySelector(".page-view-title");
@@ -35,27 +37,30 @@ let signInButton = document.querySelector("sign-in-button");
 
 
 // ************ GLOBAL VARIABLES *************** //
-let allTravelers;
-let destinations;
-let allTrips;
-let traveler;
+let travelersData;
+let destinationsData;
+let tripsData;
+let travelerInfo;
 let destination;
-let trip;
+let trips;
+let currentTraveler;
 
 // ************ EVENT LISTENERS *************** //
-window.onload = pageLoader();
+window.onload = getPageData();
 
 // ************ FETCH REQUESTS/MAIN DATA *************** //
-function promiseFulfiller() {
+function getPageData() {
   let travelerID = Math.floor((Math.random() * 50) + 1);
   Promise.all([getTravelers(), getTrips(), getDestinations(), getTraveler(travelerID)])
-    .then(promise => {
-      allTravelers = promise[0].travelers;
-      allTrips = promise[1].trips;
-      destinations = promise[2].destinations;
-      traveler = promise[3];
-      }
-    )
+    .then(allData => {
+      travelersData = allData[0].travelers;
+      tripsData = allData[1].trips;
+      destinationsData = allData[2].destinations;
+      travelerInfo = allData[3];
+      let tripRepository = new TripsRepo(travelerInfo, tripsData);
+      let travelerTrips= tripRepository.findTravelersTrips();
+      currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+      })
 }
 
 function getTravelers() {
@@ -70,27 +75,14 @@ function getTraveler(id) {
   return loneTraveler;
 }
 
-function getTrips() {
+function getDestinations() {
   const greatTrips = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations`)
     .then(response => response.json())
   return greatTrips;
 }
 
-function getDestinations() {
+function getTrips() {
   const bestDestinations = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips`)
     .then(response => response.json())
   return bestDestinations;
-}
-
-function pageLoader() {
-  promiseFulfiller();
-  console.log(allTravelers);
-}
-
-function getArray(data) {
-  let nestedObjectData = Object.values(data);
-  let unnestedArray = nestedObjectData.flatMap(array => {
-    return array;
-  })
-  return unnestedArray;
 }
