@@ -14,7 +14,7 @@ class Traveler {
     this.yearToDateTrips = this.findYearToDateTrips();
     this.yearTripCost = this.calculateYearTripCost();
     this.yearAgentFee = this.calculateYearAgentFee();
-    this.totalSpentThisYear = 0;
+    this.totalSpentThisYear = this.calculateYearTotalSpent();
 
   }
   findPresentTrips() {
@@ -63,6 +63,9 @@ class Traveler {
     return this.yearTripCost * 0.1;
   }
 
+  calculateYearTotalSpent() {
+    return this.yearTripCost + this.yearAgentFee;
+  }
 }
 
 export default Traveler;

@@ -179,9 +179,12 @@ describe('Traveler', function() {
         expect(traveler.yearTripCost).to.equal(13720);
       })
 
-      it('should return value for total spent on approved trips in the last year to date', function() {
+      it('should return value for total of agent fees on approved trips in the last year to date', function() {
         expect(traveler.yearAgentFee).to.equal(1372);
       })
 
+      it('should return value for total spent trips and agent Fees in the last year to date', function() {
+        expect(traveler.totalSpentThisYear).to.equal(15092);
+      })
     })
   })
