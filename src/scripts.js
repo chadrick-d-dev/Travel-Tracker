@@ -51,6 +51,8 @@ window.onload = getPageData();
 signInButton.addEventListener("click", signInShowMain);
 planNewTripButton.addEventListener("click", showPlanNewTripView);
 viewTripHistoryButton.addEventListener("click", showTripHistoryView);
+submitTripButton.addEventListener("click", clickSubmitTrip);
+
 
 // ************ FETCH REQUESTS/MAIN DATA *************** //
 function getPageData() {
@@ -82,4 +84,8 @@ function showTripHistoryView() {
   planNewTripButton.classList.remove("hidden");
   planNewTripView.classList.add("hidden");
   viewTripHistoryButton.classList.add("hidden");
+}
+
+function clickSubmitTrip() {
+  showTripHistoryView();
 }
