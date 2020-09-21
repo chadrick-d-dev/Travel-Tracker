@@ -89,7 +89,7 @@ describe('Traveler', function() {
           "travelers": 5,
           "date": "2019/10/31",
           "duration": 6,
-          "status": "approved",
+          "status": "pending",
           "suggestedActivities": []
         },
         {
@@ -151,9 +151,12 @@ describe('Traveler', function() {
       expect(traveler.destinations.length).to.deep.equal(3);
     })
 
-    it('should return an array of present trips that are not pending', function() {
+    it('should add array of present trips that are not pending to presentTrips', function() {
+      expect(traveler.presentTrips.length).to.equal(1);
+    })
 
-      expect(traveler.findPresentTrips().length).to.equal(1);
+    it('should return an array of past trips that are not pending', function() {
+      expect(traveler.pastTrips.length).to.equal(3);
     })
 
   })

@@ -7,7 +7,8 @@ class Traveler {
     this.todaysDate = moment().format("YYYY/MM/DD");
     this.destinations = destinationsData;
     this.trips = travelerTrips;
-    // this.pastTrips = [];
+    this.presentTrips = this.findPresentTrips();
+    this.pastTrips = this.findPastTrips();
     // this.futureTrips = [];
     // this.pendingTrips = [];
     // this.thisYearsCompletedTrips = [];
@@ -15,19 +16,17 @@ class Traveler {
   }
   findPresentTrips() {
     return this.trips.filter(trip => {
-      let endDate = moment(new    Date(trip.date)).add(trip.duration, 'days');
+      let endDate = moment(new Date(trip.date)).add(trip.duration, 'days');
       return trip.status !== "pending" && moment(new Date(this.todaysDate)).isBetween(new Date(trip.date), new Date(endDate));
     })
   }
 
-  // findPastTrips() {
-  //
-  // }
-  //
-  //
-  // findFutureTrips() {
-  //
-  // }
+  findPastTrips() {
+    return this.trips.filter(trip => {
+      let endDate = moment(new Date(trip.date)).add(trip.duration, 'days');
+      return trip.status !== "pending" && moment(new Date(endDate)).isBefore(new Date(this.todaysDate));
+    })
+  }
   //
   // findPendingTrips() {
   //
