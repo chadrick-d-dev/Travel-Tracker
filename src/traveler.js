@@ -10,7 +10,7 @@ class Traveler {
     this.presentTrips = this.findPresentTrips();
     this.pastTrips = this.findPastTrips();
     this.futureTrips = this.findFutureTrips();
-    // this.pendingTrips = [];
+    this.pendingTrips = this.findPendingTrips();
     // this.thisYearsCompletedTrips = [];
     // this.totalSpentThisYear = 0;
   }
@@ -33,11 +33,13 @@ class Traveler {
       return trip.status !== "pending" && moment(new Date(trip.date)).isAfter(new Date(this.todaysDate));
     })
   }
-  //
-  // findPendingTrips() {
-  //
-  // }
-  //
+
+  findPendingTrips() {
+    return this.trips.filter(trip => {
+      return trip.status === "pending";
+    })
+  }
+
   // findTotalSpentThisYear() {
   //
   // }

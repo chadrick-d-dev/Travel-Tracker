@@ -163,5 +163,7 @@ describe('Traveler', function() {
       expect(traveler.futureTrips.length).to.equal(1);
     })
 
-
+    it('should add array of pending trips regardless of their date to pendingTrips', function() {
+      expect(traveler.pendingTrips.length).to.equal(2);
+    })
   })
