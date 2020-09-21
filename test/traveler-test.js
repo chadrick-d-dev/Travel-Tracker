@@ -12,8 +12,8 @@ describe('Traveler', function() {
       "id": 33,
       "name": "Selene Kleyn",
       "travelerType": "relaxer"
-    }
-    traveler = new Traveler(travelerInfo);
+    };
+
     destinations = [
       {
         "id": 29,
@@ -31,8 +31,15 @@ describe('Traveler', function() {
         "image": "https://images.unsplash.com/photo-1559113202-c916b8e44373?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
         "alt": "brown concrete gate"
       },
-
-    ]
+      {
+        "id": 36,
+        "destination": "Reykjavík, Iceland",
+        "estimatedLodgingCostPerDay": 900,
+        "estimatedFlightCostPerPerson": 120,
+        "image": "https://images.unsplash.com/photo-1515005319369-c4406c3f832b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
+        "alt": "frozen river in the middle of rock mountains"
+      }
+    ];
 
     trips = [
       {
@@ -97,7 +104,7 @@ describe('Traveler', function() {
         },
         {
           "id": 110,
-          "userID": 39,
+          "userID": 33,
           "destinationID": 33,
           "travelers": 2,
           "date": "2020/04/15",
@@ -105,7 +112,9 @@ describe('Traveler', function() {
           "status": "approved",
           "suggestedActivities": []
         }
-      ]
+      ];
+
+      traveler = new Traveler(travelerInfo, trips, destinations);
     })
 
     it('is a function', function() {
@@ -133,4 +142,18 @@ describe('Traveler', function() {
     it('should initialize with todays date', function() {
       expect(traveler.todaysDate).to.deep.equal("2020/09/20");
     })
+
+    it('should initialize an array of all a travelers trips', function() {
+      expect(traveler.trips.length).to.deep.equal(7);
+    })
+
+    it('should initialize with all destinations', function() {
+      expect(traveler.destinations.length).to.deep.equal(3);
+    })
+
+    it('should return an array of present trips that are not pending', function() {
+
+      expect(traveler.findPresentTrips().length).to.equal(1);
+    })
+
   })

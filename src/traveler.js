@@ -1,30 +1,29 @@
 import moment from "moment";
 class Traveler {
-  constructor(traveler, travelerTrips) {
+  constructor(traveler, travelerTrips, destinationsData) {
     this.id = traveler.id;
     this.name = traveler.name;
     this.type = traveler.travelerType;
     this.todaysDate = moment().format("YYYY/MM/DD");
-    // this.allDestinations = destinations;
-    this.allTravelerTrips = travelerTrips;
+    this.destinations = destinationsData;
+    this.trips = travelerTrips;
     // this.pastTrips = [];
-    // this.currentTrips = [];
     // this.futureTrips = [];
     // this.pendingTrips = [];
-    // this.pastYearTrips = [];
+    // this.thisYearsCompletedTrips = [];
     // this.totalSpentThisYear = 0;
   }
-  // getAllTravelersTrips() {
-  //   // I need the array of trips, then i need to go through that array and look for a userID that a traveler id
-  // }
-  //
+  findPresentTrips() {
+    return this.trips.filter(trip => {
+      let endDate = moment(new    Date(trip.date)).add(trip.duration, 'days');
+      return trip.status !== "pending" && moment(new Date(this.todaysDate)).isBetween(new Date(trip.date), new Date(endDate));
+    })
+  }
+
   // findPastTrips() {
   //
   // }
   //
-  // findCurrentTrips() {
-  //
-  // }
   //
   // findFutureTrips() {
   //
