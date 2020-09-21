@@ -12,7 +12,10 @@ class Traveler {
     this.futureTrips = this.findFutureTrips();
     this.pendingTrips = this.findPendingTrips();
     this.yearToDateTrips = this.findYearToDateTrips();
-    // this.totalSpentThisYear = 0;
+    this.yearTripCosts = this.yearTripCosts();
+    this.totalYearsAgentTip = 0;
+    this.totalSpentThisYear = 0;
+
   }
   findPresentTrips() {
     return this.trips.filter(trip => {
@@ -47,6 +50,16 @@ class Traveler {
       return trip.status !== "pending" && moment(new Date(endDate)).isBetween(new Date (yearToDate), new Date(this.todaysDate)) && moment(new Date(trip.date)).isBetween(new Date(yearToDate), new Date(this.todaysDate));
     })
   }
+
+  yearTripCosts() {
+    let pastYearTrips = this.findYearToDateTrips();
+    return pastYearTrips.reduce((yearTripSum, trip) => {
+      const tripDestination = this.destinations.find(destination => destination.id === trip.destinationID);
+      return yearTripSum += ((trip.travelers * tripDestination.estimatedFlightCostPerPerson) + (trip.duration * tripDestination.estimatedLodgingCostPerDay))
+    }, 0)
+  }
+
+
   // findTotalSpentThisYear() {
   //
   // }

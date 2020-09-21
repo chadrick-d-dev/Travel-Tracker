@@ -117,57 +117,66 @@ describe('Traveler', function() {
       traveler = new Traveler(travelerInfo, trips, destinations);
     })
 
-    it('is a function', function() {
-      expect(Traveler).to.be.a('function');
-    });
+    describe('Properties and funcitonality', function() {
+      it('is a function', function() {
+        expect(Traveler).to.be.a('function');
+      });
 
-    it('should be an instance of Traveler', function() {
-      expect(traveler).to.be.an.instanceof(Traveler);
-    });
+      it('should be an instance of Traveler', function() {
+        expect(traveler).to.be.an.instanceof(Traveler);
+      });
 
-    it('should initialize with an id', function() {
-      traveler;
-      expect(traveler.id).to.equal(33);
+      it('should initialize with an id', function() {
+        traveler;
+        expect(traveler.id).to.equal(33);
+      })
+
+      it('should initialize with a name', function() {
+        traveler;
+        expect(traveler.name).to.deep.equal("Selene Kleyn");
+      })
+
+      it('should initialize with a traveler type', function() {
+        expect(traveler.type).to.deep.equal("relaxer");
+      })
+
+      it('should initialize with todays date', function() {
+        expect(traveler.todaysDate).to.deep.equal("2020/09/21");
+      })
+
+      it('should initialize an array of all a travelers trips', function() {
+        expect(traveler.trips.length).to.deep.equal(7);
+      })
+
+      it('should initialize with all destinations', function() {
+        expect(traveler.destinations.length).to.deep.equal(3);
+      })
     })
 
-    it('should initialize with a name', function() {
-      traveler;
-      expect(traveler.name).to.deep.equal("Selene Kleyn");
-    })
+    describe('Seperate trips by time and status of trips', function() {
+      it('should add array of present trips that are not pending to presentTrips', function() {
+        expect(traveler.presentTrips.length).to.equal(1);
+      })
 
-    it('should initialize with a traveler type', function() {
-      expect(traveler.type).to.deep.equal("relaxer");
-    })
+      it('should add array of past trips that are not pending to pastTrips', function() {
+        expect(traveler.pastTrips.length).to.equal(3);
+      })
 
-    it('should initialize with todays date', function() {
-      expect(traveler.todaysDate).to.deep.equal("2020/09/20");
-    })
+      it('should add array of future trips that are not pending to futureTrips', function() {
+        expect(traveler.futureTrips.length).to.equal(1);
+      })
 
-    it('should initialize an array of all a travelers trips', function() {
-      expect(traveler.trips.length).to.deep.equal(7);
-    })
+      it('should add array of pending trips regardless of their date to pendingTrips', function() {
+        expect(traveler.pendingTrips.length).to.equal(2);
+      })
 
-    it('should initialize with all destinations', function() {
-      expect(traveler.destinations.length).to.deep.equal(3);
+      it('should add array of all nonpending trips completed in the last year to date', function() {
+        expect(traveler.yearToDateTrips.length).to.equal(2);
+      })
     })
-
-    it('should add array of present trips that are not pending to presentTrips', function() {
-      expect(traveler.presentTrips.length).to.equal(1);
-    })
-
-    it('should add array of past trips that are not pending to pastTrips', function() {
-      expect(traveler.pastTrips.length).to.equal(3);
-    })
-
-    it('should add array of future trips that are not pending to futureTrips', function() {
-      expect(traveler.futureTrips.length).to.equal(1);
-    })
-
-    it('should add array of pending trips regardless of their date to pendingTrips', function() {
-      expect(traveler.pendingTrips.length).to.equal(2);
-    })
-
-    it('should add array of all nonpending trips completed in the last year to date', function() {
-      expect(traveler.yearToDateTrips.length).to.equal(2);
+    describe('Get travel costs for year', function() {
+      it('should return value for total spent on approved trips in the last year to date', function() {
+        expect(traveler.yearTripCosts).to.equal(13720);
+      })
     })
   })
