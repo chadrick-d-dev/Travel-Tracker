@@ -12,8 +12,8 @@ class Traveler {
     this.futureTrips = this.findFutureTrips();
     this.pendingTrips = this.findPendingTrips();
     this.yearToDateTrips = this.findYearToDateTrips();
-    this.yearTripCosts = this.yearTripCosts();
-    this.totalYearsAgentTip = 0;
+    this.yearTripCost = this.calculateYearTripCost();
+    this.yearAgentFee = this.calculateYearAgentFee();
     this.totalSpentThisYear = 0;
 
   }
@@ -51,7 +51,7 @@ class Traveler {
     })
   }
 
-  yearTripCosts() {
+  calculateYearTripCost() {
     let pastYearTrips = this.findYearToDateTrips();
     return pastYearTrips.reduce((yearTripSum, trip) => {
       const tripDestination = this.destinations.find(destination => destination.id === trip.destinationID);
@@ -59,10 +59,10 @@ class Traveler {
     }, 0)
   }
 
+  calculateYearAgentFee() {
+    return this.yearTripCost * 0.1;
+  }
 
-  // findTotalSpentThisYear() {
-  //
-  // }
 }
 
 export default Traveler;
