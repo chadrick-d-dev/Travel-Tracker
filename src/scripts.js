@@ -48,6 +48,7 @@ let currentTraveler;
 
 // ************ EVENT LISTENERS *************** //
 window.onload = getPageData();
+signInButton.addEventListener("click", signInShowMain);
 
 // ************ FETCH REQUESTS/MAIN DATA *************** //
 function getPageData() {
@@ -60,4 +61,9 @@ function getPageData() {
     let travelerTrips= tripRepository.findTravelersTrips();
     currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
   })
+}
+
+function signInShowMain() {
+  userView.classList.remove("hidden");
+  signInPageView.classList.add("hidden");
 }
