@@ -166,4 +166,8 @@ describe('Traveler', function() {
     it('should add array of pending trips regardless of their date to pendingTrips', function() {
       expect(traveler.pendingTrips.length).to.equal(2);
     })
+
+    it('should add array of all nonpending trips completed in the last year to date', function() {
+      expect(traveler.yearToDateTrips.length).to.equal(2);
+    })
   })

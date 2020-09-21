@@ -11,7 +11,7 @@ class Traveler {
     this.pastTrips = this.findPastTrips();
     this.futureTrips = this.findFutureTrips();
     this.pendingTrips = this.findPendingTrips();
-    // this.thisYearsCompletedTrips = [];
+    this.yearToDateTrips = this.findYearToDateTrips();
     // this.totalSpentThisYear = 0;
   }
   findPresentTrips() {
@@ -40,6 +40,13 @@ class Traveler {
     })
   }
 
+  findYearToDateTrips() {
+    return this.trips.filter(trip => {
+      let yearToDate = moment(new Date(this.todaysDate)).subtract(1, "years");
+      let endDate = moment(new Date(trip.date)).add(trip.duration, 'days');
+      return trip.status !== "pending" && moment(new Date(endDate)).isBetween(new Date (yearToDate), new Date(this.todaysDate)) && moment(new Date(trip.date)).isBetween(new Date(yearToDate), new Date(this.todaysDate));
+    })
+  }
   // findTotalSpentThisYear() {
   //
   // }
