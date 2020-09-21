@@ -1,14 +1,15 @@
 
 // ************ IMPORTED FILES *************** //
-import Traveler from './traveler.js';
-import fetcher from './fetch.js'
+
+import fetchAPI from './fetchAPI.js'
 import domUpdats from './domUpdates.js'
-// import Destination from './destination';
 import TripsRepo from './tripsRepo.js';
+import Traveler from './traveler.js';
 import './css/styles.scss';
 // import domUpdates from './domUpdates'
 // ************ QUERY SELECTORS *************** //
 
+let userView = document.querySelector(".user-view");
 let signOutButton = document.querySelector(".sign-out-button");
 let yearTravelCostAmount = document.querySelector(".year-travel-cost-amount");
 let pageViewTitle = document.querySelector(".page-view-title");
@@ -33,7 +34,7 @@ let submitTripButton = document.querySelector(".submit-trip-button");
 let signInPageView = document.querySelector(".sign-in-page-view");
 let usernameInput = document.querySelector(".username-input");
 let passwordInput = document.querySelector(".password-input");
-let signInButton = document.querySelector("sign-in-button");
+let signInButton = document.querySelector(".sign-in-button");
 
 
 // ************ GLOBAL VARIABLES *************** //
@@ -50,39 +51,13 @@ window.onload = getPageData();
 
 // ************ FETCH REQUESTS/MAIN DATA *************** //
 function getPageData() {
-  let travelerID = Math.floor((Math.random() * 50) + 1);
-  Promise.all([getTravelers(), getTrips(), getDestinations(), getTraveler(travelerID)])
-    .then(allData => {
-      travelersData = allData[0].travelers;
-      tripsData = allData[1].trips;
-      destinationsData = allData[2].destinations;
-      travelerInfo = allData[3];
-      let tripRepository = new TripsRepo(travelerInfo, tripsData);
-      let travelerTrips= tripRepository.findTravelersTrips();
-      currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
-      })
-}
-
-function getTravelers() {
-  const travelersGalore = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers`)
-    .then(response => response.json())
-  return travelersGalore;
-}
-
-function getTraveler(id) {
-  const loneTraveler = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${id}`)
-      .then(response => response.json())
-  return loneTraveler;
-}
-
-function getDestinations() {
-  const greatTrips = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations`)
-    .then(response => response.json())
-  return greatTrips;
-}
-
-function getTrips() {
-  const bestDestinations = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips`)
-    .then(response => response.json())
-  return bestDestinations;
+  return fetchAPI.getAllInfo().then(allData => {
+    travelersData = allData[0].travelers;
+    tripsData = allData[1].trips;
+    destinationsData = allData[2].destinations;
+    travelerInfo = allData[3];
+    let tripRepository = new TripsRepo(travelerInfo, tripsData);
+    let travelerTrips= tripRepository.findTravelersTrips();
+    currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+  })
 }
