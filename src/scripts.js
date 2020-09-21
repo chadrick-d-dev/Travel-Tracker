@@ -49,7 +49,7 @@ let currentTraveler;
 // ************ EVENT LISTENERS *************** //
 window.onload = getPageData();
 signInButton.addEventListener("click", signInShowMain);
-
+planNewTripButton.addEventListener("click", showPlanNewTripView);
 // ************ FETCH REQUESTS/MAIN DATA *************** //
 function getPageData() {
   return fetchAPI.getAllInfo().then(allData => {
@@ -66,4 +66,11 @@ function getPageData() {
 function signInShowMain() {
   userView.classList.remove("hidden");
   signInPageView.classList.add("hidden");
+}
+
+function showPlanNewTripView() {
+  planNewTripView.classList.remove("hidden");
+  viewTripHistoryButton.classList.remove("hidden");
+  tripHistoryView.classList.add("hidden");
+  planNewTripButton.classList.add("hidden");
 }
