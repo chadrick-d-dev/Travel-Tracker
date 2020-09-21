@@ -155,8 +155,13 @@ describe('Traveler', function() {
       expect(traveler.presentTrips.length).to.equal(1);
     })
 
-    it('should return an array of past trips that are not pending', function() {
+    it('should add array of past trips that are not pending to pastTrips', function() {
       expect(traveler.pastTrips.length).to.equal(3);
     })
+
+    it('should add array of future trips that are not pending to futureTrips', function() {
+      expect(traveler.futureTrips.length).to.equal(1);
+    })
+
 
   })

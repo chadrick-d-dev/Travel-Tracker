@@ -9,7 +9,7 @@ class Traveler {
     this.trips = travelerTrips;
     this.presentTrips = this.findPresentTrips();
     this.pastTrips = this.findPastTrips();
-    // this.futureTrips = [];
+    this.futureTrips = this.findFutureTrips();
     // this.pendingTrips = [];
     // this.thisYearsCompletedTrips = [];
     // this.totalSpentThisYear = 0;
@@ -25,6 +25,12 @@ class Traveler {
     return this.trips.filter(trip => {
       let endDate = moment(new Date(trip.date)).add(trip.duration, 'days');
       return trip.status !== "pending" && moment(new Date(endDate)).isBefore(new Date(this.todaysDate));
+    })
+  }
+
+  findFutureTrips() {
+    return this.trips.filter(trip => {
+      return trip.status !== "pending" && moment(new Date(trip.date)).isAfter(new Date(this.todaysDate));
     })
   }
   //
