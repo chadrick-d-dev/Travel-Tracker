@@ -88,25 +88,6 @@ describe('Traveler', function() {
       ]
 
       tripsRepo = new TripsRepo(travelerInfo, tripsData);
-
-      // destinations = [
-      //   {
-      //     "id": 29,
-      //     "destination": "Willemstad, Curaçao",
-      //     "estimatedLodgingCostPerDay": 80,
-      //     "estimatedFlightCostPerPerson": 1100,
-      //     "image": "https://images.unsplash.com/photo-1541748603027-cbfefa3a6c8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1952&q=80",
-      //     "alt": "brightly colored buildings near body of water"
-      //   },
-      //   {
-      //     "id": 33,
-      //     "destination": "Brussels, Belgium",
-      //     "estimatedLodgingCostPerDay": 1000,
-      //     "estimatedFlightCostPerPerson": 110,
-      //     "image": "https://images.unsplash.com/photo-1559113202-c916b8e44373?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-      //     "alt": "brown concrete gate"
-      //   },
-      // ]
     })
 
     it('is a function', function() {
