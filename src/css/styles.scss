@@ -10,9 +10,7 @@ body {
   font-family: $default-body-font-family;
 }
 
-.hidden {
-  display: none;
-}
+
 // ******* USER VIEW ******* //
 .user-view {
   @extend %full-page;
@@ -78,6 +76,10 @@ body {
     @extend %buttons;
     width: $header-side-item-width;
   }
+  .view-trip-history-button {
+    @extend %buttons;
+    width: $header-side-item-width;
+  }
 }
 
 
@@ -123,7 +125,7 @@ body {
   .plan-new-trip-form {
     @extend %centered-flex;
     margin-top: 75px;
-    h3 {
+    label {
       font-size: 30px;
       @extend %top-bottom-small-margin;
     }
@@ -160,7 +162,7 @@ body {
     @extend %border;
     justify-content: center;
     padding: 25px;
-    h3 {
+    label {
       font-size: 30px;
       @extend %top-bottom-small-margin;
     }
@@ -173,4 +175,8 @@ body {
       @extend %top-bottom-small-margin;
     }
   }
+}
+
+.hidden {
+  display: none;
 }

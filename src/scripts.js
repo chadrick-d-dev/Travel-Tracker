@@ -23,7 +23,7 @@ let futureTripsButton = document.querySelector(".view-future-trips-button");
 let pendingTripsButton = document.querySelector(".view-pending-trips-button");
 let tripCardGrid = document.querySelector(".trip-card-grid");
 let planNewTripView = document.querySelector(".plan-new-trip-view");
-let datePickerInput = document.querySelector(".date-picker-input");
+let tripDateInput = document.querySelector(".trip-date-input");
 let tripDurationInput = document.querySelector(".trip-duration-input");
 let numberOfTravelersInput = document.querySelector(".number-of-travelers-input");
 let destinationSelector = document.querySelector(".destination-selector");
@@ -51,6 +51,8 @@ window.onload = getPageData();
 signInButton.addEventListener("click", signInShowMain);
 planNewTripButton.addEventListener("click", showPlanNewTripView);
 viewTripHistoryButton.addEventListener("click", showTripHistoryView);
+submitTripButton.addEventListener('mouseover', preventClick);
+planNewTripView.addEventListener('mouseover', enableClick);
 submitTripButton.addEventListener("click", clickSubmitTrip);
 
 
@@ -89,3 +91,17 @@ function showTripHistoryView() {
 function clickSubmitTrip() {
   showTripHistoryView();
 }
+
+function preventClick() {
+  if (tripDateInput.value == "" || tripDurationInput.value == "" || numberOfTravelersInput.value == "" || destinationSelector.value == "") {
+     submitTripButton.disabled = true;
+   }
+  }
+
+function enableClick() {
+    if (tripDateInput.value !== "MM/DD/YYYY" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
+     submitTripButton.disabled = false;
+     submitTripButton.classList.add("cursor")
+    }
+  }
+f
