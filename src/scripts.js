@@ -51,8 +51,8 @@ window.onload = getPageData();
 signInButton.addEventListener("click", signInShowMain);
 planNewTripButton.addEventListener("click", showPlanNewTripView);
 viewTripHistoryButton.addEventListener("click", showTripHistoryView);
-submitTripButton.addEventListener('mouseover', preventClick);
-planNewTripView.addEventListener('mouseover', enableClick);
+submitTripButton.addEventListener('mouseover', preventSubmitClick);
+planNewTripView.addEventListener('mouseover', enableSubmitClick);
 submitTripButton.addEventListener("click", clickSubmitTrip);
 
 
@@ -92,16 +92,15 @@ function clickSubmitTrip() {
   showTripHistoryView();
 }
 
-function preventClick() {
-  if (tripDateInput.value == "" || tripDurationInput.value == "" || numberOfTravelersInput.value == "" || destinationSelector.value == "") {
+function preventSubmitClick() {
+  if (tripDateInput.value === "mm/dd/yyyy" || tripDurationInput.value === "" || numberOfTravelersInput.value === "" || destinationSelector.value === "0") {
      submitTripButton.disabled = true;
    }
   }
 
-function enableClick() {
-    if (tripDateInput.value !== "MM/DD/YYYY" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
+function enableSubmitClick() {
+    if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
      submitTripButton.disabled = false;
      submitTripButton.classList.add("cursor")
     }
   }
-f
