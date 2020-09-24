@@ -41,7 +41,7 @@ let trips;
 let currentTraveler;
 
 // ************ EVENT LISTENERS *************** //
-window.onload = getPageData();
+
 signInButton.addEventListener("click", signInShowMain);
 pastTripsButton.addEventListener("click", showPastTrips);
 presentTripsButton.addEventListener("click", showPresentTrips);
@@ -49,7 +49,6 @@ futureTripsButton.addEventListener("click", showFutureTrips);
 pendingTripsButton.addEventListener("click", showPendingTrips);
 planNewTripButton.addEventListener("click", showPlanNewTripView);
 viewTripHistoryButton.addEventListener("click", showTripHistoryView);
-// planNewTripView.addEventListener("click", enableSubmitClick);
 estimatedCostsButton.addEventListener("click", clickEstimateCosts);
 submitTripButton.addEventListener("click", clickSubmitTrip);
 
@@ -77,6 +76,7 @@ function signInShowMain() {
   let userView = document.querySelector(".user-view");
   userView.classList.remove("hidden");
   signInPageView.classList.add("hidden");
+  getPageData();
 }
 
 function getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData) {
@@ -147,11 +147,14 @@ function clickEstimateCosts() {
     domUpdates.displayNewTripCost(currentTraveler, numberOfTravelersInput, destinationSelector, tripDurationInput, destinationsData);
     submitTripButton.disabled = false;
   }
+  console.log(tripDateInput.value);
 }
 
 function clickSubmitTrip() {
   if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
+  fetchAPI.postTrip(currentTraveler, destinationSelector, numberOfTravelersInput, tripDateInput, tripDurationInput);
+  getPageData();
   showTripHistoryView();
-  domUpdates.resetPlanTripForm(); 
+  domUpdates.resetPlanTripForm();
   }
 }
