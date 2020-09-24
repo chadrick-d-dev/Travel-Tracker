@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <script type="text/javascript">
+      function noBackspaces(event)
+      {
+        backspace = 8;
+        if (event.keyCode == backspace) event.preventDefault();
+      }
+    </script>
     <meta charset="utf-8">
     <title>Travel Tracker</title>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Sulphur+Point:400,700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <section class="user-view">
+    <main class="user-view hidden">
       <header class="main-header">
-          <h1 class="travel-tracker-title">Travel Tracker</h1>
-          <h1 class="welcome-banner">Welcome</h1>
-          <button type="button" class="sign-out-button" name="sign-out-button">Sign Out</button>
+          <pageViewTitle class="travel-tracker-title">Travel Tracker</pageViewTitle>
+          <h2 class="welcome-banner">Welcome</h2>
       </header>
-      <header class="view-header">
-        <section class="year-travel-cost-widget" aria->
+      <section class="view-header">
+        <section class="year-travel-cost-widget">
           <h3 class="year-travel-cost-title">Year to Date Travel Cost</h3>
           <p class="year-travel-cost-amount">$$$<p>
         </section>
         <h1 class="page-view-title">Trip History</h1>
         <button class="plan-new-trip-button" type="button" name="button">Plan New Trip</button>
-        <button class="view-trip-history-button hidden" type="button" name="button"></button>
-      </header>
+        <button class="view-trip-history-button hidden" type="button" name="button">View Trip History</button>
+      </section>
       <section class="trip-history-view">
         <nav class="trip-by-time-button-navigator">
           <button class="view-past-trips-button nav-button" type="button" name="past-trips-button">Past Trips</button>
@@ -34,43 +40,86 @@
       </section>
       <section class="plan-new-trip-view hidden">
         <form class="plan-new-trip-form" action="index.html" method="post">
-          <h3>Enter Start Date of Trip</h3>
-          <input class="date-picker-input" type="text" name="" value="">
-          <h3>Enter Duration of Trip (days)</h3>
-          <input class="trip-duration-input" type="text" name="" value="">
-          <h3>Enter Number of Travelers</h3>
-          <input class="number-of-travelers-input" type="text" name="" value="">
-          <h3>Select Destination</h3>
+          <label for="trip-date-input">Enter Trip Departure Date</label>
+          <input class="trip-date-input" type="date" name="trip-date" min="2020-09-25" max="2030-10-20" onkeydown="noBackspaces(event)" value="2020-09-25">
+          <label for="trip-duration-input">Enter Number of Days</label>
+          <input class="trip-duration-input" type="number" name="duration" min="1" value="">
+          <label for="number-of-travelers-input">Enter Number of Travelers</label>
+          <input class="number-of-travelers-input" type="number" name="quantity" min="1" value="">
+          <label for="destination-selector">Select Your Destination</label>
           <select class="destination-selector" name="destination-selection-dropdown">
+            <option value="0"></option>
+            <option value="1">'Lima, Peru'</option>
+            <option value="2">'Stockholm, Sweden'</option>
+            <option value="3">'Sydney, Austrailia'</option>
+            <option value="4">'Cartagena, Colombia'</option>
+            <option value="5">'Madrid, Spain'</option>
+            <option value="6">'Jakarta, Indonesia'</option>
+            <option value="7">'Paris, France'</option>
+            <option value="8">'Tokyo, Japan'</option>
+            <option value="9">'Amsterdam, Netherlands'</option>
+            <option value="10">'Toronto, Canada'</option>
+            <option value="11">'Mikonos, Greece'</option>
+            <option value="12">'Wellington, New Zealand'</option>
+            <option value="13">'St. Petersburg, Russia'</option>
+            <option value="14">'Marrakesh, Morocco'</option>
+            <option value="15">'Manila, Philippines'</option>
+            <option value="16">'Bangkok, Thailand'</option>
+            <option value="17">'Jaipur, India'</option>
+            <option value="18">'Cape Town, South Africa'</option>
+            <option value="19">'Quito, Ecuador'</option>
+            <option value="20">'Miami, Florida'</option>
+            <option value="21">'Tulum, Mexico'</option>
+            <option value="22">'Rome, Italy'</option>
+            <option value="23">'Copenhagen, Denmark'</option>
+            <option value="24">'Vilnius, Lithuania'</option>
+            <option value="25">'New York, New York'</option>
+            <option value="26">'London, England'</option>
+            <option value="27">'San Francisco, California'</option>
+            <option value="28">'San Juan, Puerto Rico'</option>
+            <option value="29">'Willemstad, Curaçao'</option>
+            <option value="30">'Antananarivo, Madagascar'</option>
+            <option value="31">'Colombo, Sri Lanka'</option>
+            <option value="32">'Kathmandu, Nepal'</option>
+            <option value="33">'Brussels, Belgium'</option>
+            <option value="34">'Seoul, South Korea'</option>
+            <option value="35">'Anchorage, Alaska'</option>
+            <option value="36">'Reykjavík, Iceland'</option>
+            <option value="37">'Frankfurt, Germany'</option>
+            <option value="38">'Helsinki, Finland'</option>
+            <option value="39">'Porto, Portugal'</option>
+            <option value="40">'La Isla Tortuga, Costa Rica'</option>
+            <option value="41">'Montego Bay, Jamaica'</option>
+            <option value="42">'Santo Domingo, Dominican Republic'</option>
+            <option value="43">'Nassau, The Bahamas'</option>
+            <option value="44">'Caye Caulker, Belize'</option>
+            <option value="45">'Calgary, Canada'</option>
+            <option value="46">'Victoria, Seychelles'</option>
+            <option value="47">'Zürich, Switzerland'</option>
+            <option value="48">'Dar es Salaam, Tanzania'</option>
+            <option value="49">'Castries, St Lucia'</option>
+            <option value="50">'Hobart, Tasmania'</option>
           </select>
-          <section class="trip-cost-estimation-widget">
-            <h3>Estimated Trip Costs</h3>
-            <table>
-              <tr>
-                <th>Trip Cost:</th>
-                <td class="new-trip-cost">$$$</td>
-              </tr>
-              <tr>
-                <th>Agent Fee:</th>
-                <td class="new-trip-agent-fee">$$$</td>
-              </tr>
-              <tr>
-                <th>Trip Total:</th>
-                <td class="new-trip-total">$$$</td>
-              </tr>
-            </table>
-          </section>
-          <button class="submit-trip-button" type="button" name="button">Submit Trip</button>
+          <button class="estimated-costs-button" type="button" name="button">Estimate Costs</button>
+          <button class="submit-trip-button" disabled type="button" name="button">Book Trip</button>
         </form>
+        <section class="trip-cost-estimation-widget hidden">
+          <label for="new-trip-Cost">Estimated Trip Cost</label>
+          <p class="new-trip-cost">Trip Cost Before Agent Fee</p>
+          <label for="new-trip-agent-fee">Estimated Trip Agent Fee</label>
+          <p class="new-trip-agent-fee">Ten Percent Agent Fee</p>
+          <label for="new-trip-total">Estimated Trip Total</label>
+          <p class="new-trip-total">Trip and Agent Fee Total</p>
+        </section>
       </section>
-    </section>
-    <section class="sign-in-page-view hidden">
+    </main>
+    <section class="sign-in-page-view">
       <h1>Welcome to Travel Tracker!</h1>
       <form class="sign-in-form" action="index.html" method="post">
-        <h3 class="log-in-header">Username</h3>
-        <input class="username-input" type="text" name="" value="Enter Username Here">
-        <h3 class="log-in-header">Password</h3>
-        <input class="password-input" type="text" name="" value="Enter Password Here">
+        <label for="username-input">Username:
+        <input type="text" class="username-input" name="username" value=""></label>
+        <label for="password-input">Password:
+        <input type="password" class="password-input" name="password" value=""></label>
         <button class="sign-in-button" type="button" name="button">Click to Sign In</button>
       </form>
     </section>

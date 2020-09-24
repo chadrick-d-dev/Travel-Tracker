@@ -1,88 +1,168 @@
 
 // ************ IMPORTED FILES *************** //
-import Traveler from './traveler.js';
-import fetcher from './fetch.js'
-import domUpdats from './domUpdates.js'
-// import Destination from './destination';
-import TripsRepo from './tripsRepo.js';
+
 import './css/styles.scss';
-// import domUpdates from './domUpdates'
+import fetchAPI from './fetchAPI.js'
+import TripsRepo from './tripsRepo.js';
+import Traveler from './traveler.js';
+import domUpdates from './domUpdates.js'
 // ************ QUERY SELECTORS *************** //
 
-let signOutButton = document.querySelector(".sign-out-button");
-let yearTravelCostAmount = document.querySelector(".year-travel-cost-amount");
-let pageViewTitle = document.querySelector(".page-view-title");
+
 let planNewTripButton = document.querySelector(".plan-new-trip-button");
 let viewTripHistoryButton = document.querySelector(".view-trip-history-button");
 let tripHistoryView = document.querySelector(".trip-history-view");
-let tripTimeButtonNav = document.querySelector(".trip-by-time-button-navigator");
 let pastTripsButton = document.querySelector(".view-past-trips-button");
 let presentTripsButton = document.querySelector(".view-present-trips-button");
 let futureTripsButton = document.querySelector(".view-future-trips-button");
 let pendingTripsButton = document.querySelector(".view-pending-trips-button");
 let tripCardGrid = document.querySelector(".trip-card-grid");
 let planNewTripView = document.querySelector(".plan-new-trip-view");
-let datePickerInput = document.querySelector(".date-picker-input");
+let tripDateInput = document.querySelector(".trip-date-input");
 let tripDurationInput = document.querySelector(".trip-duration-input");
 let numberOfTravelersInput = document.querySelector(".number-of-travelers-input");
 let destinationSelector = document.querySelector(".destination-selector");
-let newTripCost = document.querySelector(".new-trip-cost");
-let newTripAgentFee = document.querySelector(".new-trip-agent-fee");
-let newTripTotal = document.querySelector(".new-trip-total");
+let estimatedCostsButton = document.querySelector(".estimated-costs-button");
 let submitTripButton = document.querySelector(".submit-trip-button");
-let signInPageView = document.querySelector(".sign-in-page-view");
-let usernameInput = document.querySelector(".username-input");
-let passwordInput = document.querySelector(".password-input");
-let signInButton = document.querySelector("sign-in-button");
-
+let signInButton = document.querySelector(".sign-in-button");
 
 // ************ GLOBAL VARIABLES *************** //
-let travelersData;
+
 let destinationsData;
 let tripsData;
 let travelerInfo;
-let destination;
-let trips;
 let currentTraveler;
 
 // ************ EVENT LISTENERS *************** //
-window.onload = getPageData();
+
+signInButton.addEventListener("click", userSignIn);
+pastTripsButton.addEventListener("click", showPastTrips);
+presentTripsButton.addEventListener("click", showPresentTrips);
+futureTripsButton.addEventListener("click", showFutureTrips);
+pendingTripsButton.addEventListener("click", showPendingTrips);
+planNewTripButton.addEventListener("click", showPlanNewTripView);
+viewTripHistoryButton.addEventListener("click", showTripHistoryView);
+estimatedCostsButton.addEventListener("click", clickEstimateCosts);
+submitTripButton.addEventListener("click", clickSubmitTrip);
 
 // ************ FETCH REQUESTS/MAIN DATA *************** //
-function getPageData() {
-  let travelerID = Math.floor((Math.random() * 50) + 1);
-  Promise.all([getTravelers(), getTrips(), getDestinations(), getTraveler(travelerID)])
-    .then(allData => {
-      travelersData = allData[0].travelers;
-      tripsData = allData[1].trips;
-      destinationsData = allData[2].destinations;
-      travelerInfo = allData[3];
-      let tripRepository = new TripsRepo(travelerInfo, tripsData);
-      let travelerTrips= tripRepository.findTravelersTrips();
-      currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
-      })
+function userSignIn() {
+  let usernameInput = document.querySelector(".username-input");
+  let passwordInput = document.querySelector(".password-input");
+  let takeID = usernameInput.value.match(/\d+/g);
+  let userID = takeID[0];
+  if (!usernameInput.value.includes("traveler") && userID >= 1 && userID <= 50 && passwordInput.value !== "travel2020") {
+    signInButton.disabled = true;
+  } else {
+    signInButton.disabled = false;
+    getPageData(userID);
+    document.querySelector(".user-view").classList.remove("hidden");
+    document.querySelector(".sign-in-page-view").classList.add("hidden");
+   }
 }
 
-function getTravelers() {
-  const travelersGalore = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers`)
-    .then(response => response.json())
-  return travelersGalore;
+function getPageData(userID) {
+  return fetchAPI.getAllInfo(userID).then(allData => {
+    let travelersData = allData[0].travelers;
+    tripsData = allData[1].trips;
+    destinationsData = allData[2].destinations;
+    travelerInfo = allData[3];
+    let tripRepository = new TripsRepo(travelerInfo, tripsData);
+    let travelerTrips = tripRepository.findTravelersTrips();
+    currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+    getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData);
+    applyTravelerInfo(currentTraveler);
+  })
 }
 
-function getTraveler(id) {
-  const loneTraveler = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${id}`)
-      .then(response => response.json())
-  return loneTraveler;
+function getCurrentTravelerInfo() {
+  // currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+  currentTraveler.findPresentTrips();
+  currentTraveler.findPastTrips();
+  currentTraveler.findFutureTrips();
+  currentTraveler.findPendingTrips();
+  currentTraveler.findYearToDateTrips();
 }
 
-function getDestinations() {
-  const greatTrips = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations`)
-    .then(response => response.json())
-  return greatTrips;
+function applyTravelerInfo(currentTraveler) {
+  domUpdates.welcomeTraveler(currentTraveler);
+  domUpdates.displayYearTotal(currentTraveler);
 }
 
-function getTrips() {
-  const bestDestinations = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips`)
-    .then(response => response.json())
-  return bestDestinations;
+function showPastTrips() {
+  if (!currentTraveler.pastTrips.length < 1) {
+    domUpdates.displayPastTrips(tripCardGrid, currentTraveler);
+  } else {
+    domUpdates.noTripsMessage(tripCardGrid);
+  }
+}
+
+function showPresentTrips() {
+  if (!currentTraveler.presentTrips.length < 1) {
+    domUpdates.displayPresentTrips(tripCardGrid, currentTraveler);
+  } else {
+    domUpdates.noTripsMessage(tripCardGrid);
+  }
+}
+
+function showFutureTrips() {
+  if (!currentTraveler.futureTrips.length < 1) {
+    domUpdates.displayFutureTrips(tripCardGrid, currentTraveler);
+  } else {
+    domUpdates.noTripsMessage(tripCardGrid);
+  }
+}
+
+function showPendingTrips() {
+  if (!currentTraveler.pendingTrips.length < 1) {
+    domUpdates. displayPendingTrips(tripCardGrid, currentTraveler);
+  } else {
+    domUpdates.noTripsMessage(tripCardGrid);
+  }
+}
+
+function showPlanNewTripView() {
+  planNewTripView.classList.remove("hidden");
+  viewTripHistoryButton.classList.remove("hidden");
+  tripHistoryView.classList.add("hidden");
+  planNewTripButton.classList.add("hidden");
+  domUpdates.showPlanTripTitle()
+}
+
+function showTripHistoryView() {
+  tripHistoryView.classList.remove("hidden");
+  planNewTripButton.classList.remove("hidden");
+  planNewTripView.classList.add("hidden");
+  viewTripHistoryButton.classList.add("hidden");
+  domUpdates.showTripHistoryTitle();
+}
+
+function clickEstimateCosts() {
+  if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
+    domUpdates.displayNewTripCost(currentTraveler, numberOfTravelersInput, destinationSelector, tripDurationInput, destinationsData);
+    submitTripButton.disabled = false;
+  }
+}
+
+
+function clickSubmitTrip() {
+  if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
+  fetchAPI.postTrip(currentTraveler, destinationSelector, numberOfTravelersInput, tripDateInput, tripDurationInput);
+  showTripHistoryView();
+  domUpdates.resetPlanTripForm();
+  refreshData();
+  }
+}
+
+function refreshData() {
+  return fetchAPI.getAllInfo(currentTraveler.id).then(upData => {
+    let travelersData = upData[0].travelers;
+    tripsData = upData[1].trips;
+    destinationsData = upData[2].destinations;
+    travelerInfo = upData[3];
+    let tripRepository = new TripsRepo(travelerInfo, tripsData);
+    let travelerTrips = tripRepository.findTravelersTrips();
+    currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+    getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData);
+  })
 }

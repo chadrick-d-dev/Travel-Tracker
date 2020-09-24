@@ -51,140 +51,140 @@ describe('Traveler', function() {
         "duration": 6,
         "status": "approved",
         "suggestedActivities": []
-        },
-        {
-          "id": 30,
-          "userID": 33,
-          "destinationID": 29,
-          "travelers": 1,
-          "date": "2020/05/17",
-          "duration": 5,
-          "status": "approved",
-          "suggestedActivities": []
-        },
-        {
-          "id": 31,
-          "userID": 33,
-          "destinationID": 36,
-          "travelers": 3,
-          "date": "2020/12/19",
-          "duration": 15,
-          "status": "approved",
-          "suggestedActivities": []
-        },
-        {
-          "id": 38,
-          "userID": 33,
-          "destinationID": 33,
-          "travelers": 3,
-          "date": "2021/02/18",
-          "duration": 15,
-          "status": "pending",
-          "suggestedActivities": []
-        },
-        {
-          "id": 32,
-          "userID": 33,
-          "destinationID": 36,
-          "travelers": 5,
-          "date": "2019/10/31",
-          "duration": 6,
-          "status": "pending",
-          "suggestedActivities": []
-        },
-        {
-          "id": 109,
-          "userID": 33,
-          "destinationID": 29,
-          "travelers": 1,
-          "date": "2019/07/02",
-          "duration": 20,
-          "status": "approved",
-          "suggestedActivities": []
-        },
-        {
-          "id": 110,
-          "userID": 33,
-          "destinationID": 33,
-          "travelers": 2,
-          "date": "2020/04/15",
-          "duration": 12,
-          "status": "approved",
-          "suggestedActivities": []
-        }
-      ];
+      },
+      {
+        "id": 30,
+        "userID": 33,
+        "destinationID": 29,
+        "travelers": 1,
+        "date": "2020/05/17",
+        "duration": 5,
+        "status": "approved",
+        "suggestedActivities": []
+      },
+      {
+        "id": 31,
+        "userID": 33,
+        "destinationID": 36,
+        "travelers": 3,
+        "date": "2020/12/19",
+        "duration": 15,
+        "status": "approved",
+        "suggestedActivities": []
+      },
+      {
+        "id": 38,
+        "userID": 33,
+        "destinationID": 33,
+        "travelers": 3,
+        "date": "2021/02/18",
+        "duration": 15,
+        "status": "pending",
+        "suggestedActivities": []
+      },
+      {
+        "id": 32,
+        "userID": 33,
+        "destinationID": 36,
+        "travelers": 5,
+        "date": "2019/10/31",
+        "duration": 6,
+        "status": "pending",
+        "suggestedActivities": []
+      },
+      {
+        "id": 109,
+        "userID": 33,
+        "destinationID": 29,
+        "travelers": 1,
+        "date": "2019/07/02",
+        "duration": 20,
+        "status": "approved",
+        "suggestedActivities": []
+      },
+      {
+        "id": 110,
+        "userID": 33,
+        "destinationID": 33,
+        "travelers": 2,
+        "date": "2020/04/15",
+        "duration": 12,
+        "status": "approved",
+        "suggestedActivities": []
+      }
+    ];
 
-      traveler = new Traveler(travelerInfo, trips, destinations);
+    traveler = new Traveler(travelerInfo, trips, destinations);
+  })
+
+  describe('Properties and funcitonality', function() {
+    it('is a function', function() {
+      expect(Traveler).to.be.a('function');
+    });
+
+    it('should be an instance of Traveler', function() {
+      expect(traveler).to.be.an.instanceof(Traveler);
+    });
+
+    it('should initialize with an id', function() {
+      traveler;
+      expect(traveler.id).to.equal(33);
     })
 
-    describe('Properties and funcitonality', function() {
-      it('is a function', function() {
-        expect(Traveler).to.be.a('function');
-      });
-
-      it('should be an instance of Traveler', function() {
-        expect(traveler).to.be.an.instanceof(Traveler);
-      });
-
-      it('should initialize with an id', function() {
-        traveler;
-        expect(traveler.id).to.equal(33);
-      })
-
-      it('should initialize with a name', function() {
-        traveler;
-        expect(traveler.name).to.deep.equal("Selene Kleyn");
-      })
-
-      it('should initialize with a traveler type', function() {
-        expect(traveler.type).to.deep.equal("relaxer");
-      })
-
-      it('should initialize with todays date', function() {
-        expect(traveler.todaysDate).to.deep.equal("2020/09/21");
-      })
-
-      it('should initialize an array of all a travelers trips', function() {
-        expect(traveler.trips.length).to.deep.equal(7);
-      })
-
-      it('should initialize with all destinations', function() {
-        expect(traveler.destinations.length).to.deep.equal(3);
-      })
+    it('should initialize with a name', function() {
+      traveler;
+      expect(traveler.name).to.deep.equal("Selene Kleyn");
     })
 
-    describe('Seperate trips by time and status of trips', function() {
-      it('should add array of present trips that are not pending to presentTrips', function() {
-        expect(traveler.presentTrips.length).to.equal(1);
-      })
-
-      it('should add array of past trips that are not pending to pastTrips', function() {
-        expect(traveler.pastTrips.length).to.equal(3);
-      })
-
-      it('should add array of future trips that are not pending to futureTrips', function() {
-        expect(traveler.futureTrips.length).to.equal(1);
-      })
-
-      it('should add array of pending trips regardless of their date to pendingTrips', function() {
-        expect(traveler.pendingTrips.length).to.equal(2);
-      })
-
-      it('should add array of all nonpending trips completed in the last year to date', function() {
-        expect(traveler.yearToDateTrips.length).to.equal(2);
-      })
+    it('should initialize with a traveler type', function() {
+      expect(traveler.type).to.deep.equal("relaxer");
     })
-    describe('Get travel costs for year', function() {
-      it('should return value for total spent on approved trips in the last year to date', function() {
-        expect(traveler.yearTripCost).to.equal(13720);
-      })
 
-      it('should return value for total of agent fees on approved trips in the last year to date', function() {
-        expect(traveler.yearAgentFee).to.equal(1372);
-      })
+    it('should initialize with todays date', function() {
+      expect(traveler.todaysDate).to.deep.equal("2020/09/23");
+    })
 
-      it('should return value for total spent trips and agent Fees in the last year to date', function() {
-        expect(traveler.totalSpentThisYear).to.equal(15092);
-      })
+    it('should initialize an array of all a travelers trips', function() {
+      expect(traveler.trips.length).to.deep.equal(7);
+    })
+
+    it('should initialize with all destinations', function() {
+      expect(traveler.destinations.length).to.deep.equal(3);
     })
   })
+
+  describe('Seperate trips by time and status of trips', function() {
+    it('should return array of present trips that are not pending', function() {
+      expect(traveler.findPresentTrips().length).to.equal(1);
+    })
+
+    it('should return array of past trips that are not pending', function() {
+      expect(traveler.findPastTrips().length).to.equal(3);
+    })
+
+    it('should return array of future trips that are not pending', function() {
+      expect(traveler.findFutureTrips().length).to.equal(1);
+    })
+
+    it('should return array of pending trips regardless of their date', function() {
+      expect(traveler.findPendingTrips().length).to.equal(2);
+    })
+
+    it('should return array of all nonpending trips completed in the last year to date', function() {
+      expect(traveler.findYearToDateTrips().length).to.equal(2);
+    })
+  })
+  describe('Get travel costs for year', function() {
+    it('should return value for total spent on approved trips in the last year to date', function() {
+      expect(traveler.calculateYearTripCost()).to.equal(13720);
+    })
+
+    it('should return value for total of agent fees on approved trips in the last year to date', function() {
+      expect(traveler.calculateYearAgentFee()).to.equal(1372);
+    })
+
+    it('should return value for total spent trips and agent Fees in the last year to date', function() {
+      expect(traveler.calculateYearTotalSpent()).to.equal(15092);
+    })
+  })
+})
