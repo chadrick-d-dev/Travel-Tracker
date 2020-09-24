@@ -16,7 +16,6 @@ body {
   @extend %full-page;
   display: grid;
   grid-template-rows: 1fr 2fr 7fr;
-  grid-template-columns: 1fr;
 }
 
 // ******* Main Header ******* //
@@ -27,7 +26,6 @@ body {
   height: 100%;
   border-bottom-style: none;
   grid-row: 1 / 2;
-  grid-column: 1 / 2;
   .travel-tracker-title {
     @extend %header-h1;
   }
@@ -49,7 +47,6 @@ body {
   @extend %page-padding;
   height:100%;
   grid-row: 2 / 3;
-  grid-column: 1 / 2;
   .year-travel-cost-widget {
     @extend %centered-flex;
     width: $header-side-item-width;
@@ -88,7 +85,6 @@ body {
   display: flex;
   flex-direction: row;
   grid-row: 3 / 4;
-  grid-column: 1 / 2;
   .trip-by-time-button-navigator {
     width: 200px;
     height: 90%;
@@ -119,10 +115,15 @@ body {
 
 // ******* Plan New Trip View ******* //
 .plan-new-trip-view {
-  @extend %centered-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   grid-row: 3 / 4;
-  grid-column: 1 / 2;
+  grid-template-columns: 1fr 1fr;
+  width: 98%;
+  max-height: 750px;
   .plan-new-trip-form {
+    grid-column: 1 / 2;
     @extend %centered-flex;
     margin-top: 75px;
     label {
@@ -135,15 +136,24 @@ body {
     select {
       @extend %form-inputs;
     }
-    .trip-cost-estimation-widget {
-      table {
-        @extend %centered-flex;
-        flex-direction: column;
-        font-size: 25px;
-      }
-    }
     button {
       @extend %buttons;
+    }
+  }
+  .trip-cost-estimation-widget {
+    grid-column: 3 / 4;
+    margin-top: 75px;
+    @extend %centered-flex;
+    // align-self: center;
+
+    label {
+      @extend %top-bottom-small-margin;
+      font-size: 35px;
+      font-weight: bolder;
+    }
+    p {
+      @extend %top-bottom-small-margin;
+      font-size: 25px;
     }
   }
 }

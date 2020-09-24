@@ -100,25 +100,17 @@
             <option value="49">'Castries, St Lucia'</option>
             <option value="50">'Hobart, Tasmania'</option>
           </select>
-          <section class="trip-cost-estimation-widget">
-            <label for="estimated-trip-cost-table">Estimated Trip Cost</label>
-            <table class=estimated-trip-cost-table>
-              <tr>
-                <th>Trip Cost:</th>
-                <td class="new-trip-cost">$$$</td>
-              </tr>
-              <tr>
-                <th>Agent Fee:</th>
-                <td class="new-trip-agent-fee">$$$</td>
-              </tr>
-              <tr>
-                <th>Trip Total:</th>
-                <td class="new-trip-total">$$$</td>
-              </tr>
-            </table>
-          </section>
-          <button class="submit-trip-button" type="button" name="button">Submit Trip</button>
+          <button class="estimated-costs-button" type="button" name="button">Estimate Costs</button>
+          <button class="submit-trip-button" disabled type="button" name="button">Book Trip</button>
         </form>
+        <section class="trip-cost-estimation-widget hidden">
+          <label for="new-trip-Cost">Estimated Trip Cost</label>
+          <p class="new-trip-cost">Trip Cost Before Agent Fee</p>
+          <label for="new-trip-agent-fee">Estimated Trip Agent Fee</label>
+          <p class="new-trip-agent-fee">Ten Percent Agent Fee</p>
+          <label for="new-trip-total">Estimated Trip Total</label>
+          <p class="new-trip-total">Trip and Agent Fee Total</p>
+        </section>
       </section>
     </main>
     <section class="sign-in-page-view">
