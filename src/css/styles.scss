@@ -109,9 +109,31 @@ body {
   }
   .trip-card-grid {
     width: 100%;
-    height: 100%;
+    max-height: 700px;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .trip-info-card {
+      border-radius: 7px;
+      height: 270px;
+      margin: 20px;
+      padding: 15px;
+      width: 250px;
+      p {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      label {
+        font-size: 20px;
+        font-weight: bolder;
+      }
+    }
   }
 }
+
 
 // ******* Plan New Trip View ******* //
 .plan-new-trip-view {

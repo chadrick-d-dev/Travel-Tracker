@@ -13,7 +13,7 @@ let pageViewTitle = document.querySelector(".page-view-title");
 let planNewTripButton = document.querySelector(".plan-new-trip-button");
 let viewTripHistoryButton = document.querySelector(".view-trip-history-button");
 let tripHistoryView = document.querySelector(".trip-history-view");
-let tripTimeButtonNav = document.querySelector(".trip-by-time-button-navigator");
+
 let pastTripsButton = document.querySelector(".view-past-trips-button");
 let presentTripsButton = document.querySelector(".view-present-trips-button");
 let futureTripsButton = document.querySelector(".view-future-trips-button");
@@ -43,6 +43,10 @@ let currentTraveler;
 // ************ EVENT LISTENERS *************** //
 window.onload = getPageData();
 signInButton.addEventListener("click", signInShowMain);
+pastTripsButton.addEventListener("click", showPastTrips);
+presentTripsButton.addEventListener("click", showPresentTrips);
+futureTripsButton.addEventListener("click", showFutureTrips);
+pendingTripsButton.addEventListener("click", showPendingTrips);
 planNewTripButton.addEventListener("click", showPlanNewTripView);
 viewTripHistoryButton.addEventListener("click", showTripHistoryView);
 // planNewTripView.addEventListener("click", enableSubmitClick);
@@ -63,10 +67,9 @@ function getPageData() {
     let tripRepository = new TripsRepo(travelerInfo, tripsData);
     let travelerTrips= tripRepository.findTravelersTrips();
     currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
-    getCurrentTravelerInfo();
+    getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData);
     console.log(currentTraveler);
     applyTravelerInfo(currentTraveler);
-
   })
 }
 
@@ -74,6 +77,53 @@ function signInShowMain() {
   let userView = document.querySelector(".user-view");
   userView.classList.remove("hidden");
   signInPageView.classList.add("hidden");
+}
+
+function getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData) {
+  currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+  currentTraveler.findPresentTrips();
+  currentTraveler.findPastTrips();
+  currentTraveler.findFutureTrips();
+  currentTraveler.findPendingTrips();
+  currentTraveler.findYearToDateTrips();
+  console.log(currentTraveler.pastTrips.length);
+}
+
+function applyTravelerInfo(currentTraveler) {
+  domUpdates.welcomeTraveler(currentTraveler);
+  domUpdates.displayYearTotal(currentTraveler);
+}
+
+function showPastTrips() {
+  if (!currentTraveler.pastTrips.length < 1) {
+    domUpdates.displayPastTrips(tripCardGrid, currentTraveler);
+  } else {
+    domUpdates.noTripsMessage(tripCardGrid);
+  }
+}
+
+function showPresentTrips() {
+  if (!currentTraveler.presentTrips.length < 1) {
+    domUpdates.displayPresentTrips(tripCardGrid, currentTraveler);
+  } else {
+    domUpdates.noTripsMessage(tripCardGrid);
+  }
+}
+
+function showFutureTrips() {
+  if (!currentTraveler.futureTrips.length < 1) {
+    domUpdates.displayFutureTrips(tripCardGrid, currentTraveler);
+  } else {
+    domUpdates.noTripsMessage(tripCardGrid);
+  }
+}
+
+function showPendingTrips() {
+  if (!currentTraveler.pendingTrips.length < 1) {
+    domUpdates. displayPendingTrips(tripCardGrid, currentTraveler);
+  } else {
+    domUpdates.noTripsMessage(tripCardGrid);
+  }
 }
 
 function showPlanNewTripView() {
@@ -102,16 +152,6 @@ function clickEstimateCosts() {
 function clickSubmitTrip() {
   if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
   showTripHistoryView();
+  domUpdates.resetPlanTripForm(); 
   }
-}
-function getCurrentTravelerInfo() {
-  currentTraveler.findPresentTrips();
-  currentTraveler.findPastTrips();
-  currentTraveler.findFutureTrips(); currentTraveler.findPendingTrips();
-  currentTraveler.findYearToDateTrips();
-}
-
-function applyTravelerInfo(currentTraveler) {
-  domUpdates.welcomeTraveler(currentTraveler);
-  domUpdates.displayYearTotal(currentTraveler);
 }
