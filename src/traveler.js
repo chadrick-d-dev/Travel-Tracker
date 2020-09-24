@@ -17,8 +17,8 @@ class Traveler {
     let presentTrips = this.trips.filter(trip => {
       let endDate = moment(new Date(trip.date)).add(trip.duration, 'days');
       return trip.status !== "pending" && moment(new Date(this.todaysDate)).isBetween(new Date(trip.date), new Date(endDate));
-      })
-      return this.presentTrips = presentTrips;
+    })
+    return this.presentTrips = presentTrips;
   }
 
   findPastTrips() {

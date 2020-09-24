@@ -8,7 +8,7 @@ import Traveler from './traveler.js';
 import domUpdates from './domUpdates.js'
 // ************ QUERY SELECTORS *************** //
 
-let yearTravelCostAmount = document.querySelector(".year-travel-cost-amount");
+
 let planNewTripButton = document.querySelector(".plan-new-trip-button");
 let viewTripHistoryButton = document.querySelector(".view-trip-history-button");
 let tripHistoryView = document.querySelector(".trip-history-view");
@@ -27,12 +27,10 @@ let submitTripButton = document.querySelector(".submit-trip-button");
 let signInButton = document.querySelector(".sign-in-button");
 
 // ************ GLOBAL VARIABLES *************** //
-let travelersData;
+
 let destinationsData;
 let tripsData;
 let travelerInfo;
-let destination;
-let trips;
 let currentTraveler;
 
 // ************ EVENT LISTENERS *************** //
@@ -47,8 +45,6 @@ viewTripHistoryButton.addEventListener("click", showTripHistoryView);
 estimatedCostsButton.addEventListener("click", clickEstimateCosts);
 submitTripButton.addEventListener("click", clickSubmitTrip);
 
-
-
 // ************ FETCH REQUESTS/MAIN DATA *************** //
 function userSignIn() {
   let usernameInput = document.querySelector(".username-input");
@@ -57,7 +53,7 @@ function userSignIn() {
   let userID = takeID[0];
   if (!usernameInput.value.includes("traveler") && userID >= 1 && userID <= 50 && passwordInput.value !== "travel2020") {
     signInButton.disabled = true;
-  }else {
+  } else {
     signInButton.disabled = false;
     getPageData(userID);
     document.querySelector(".user-view").classList.remove("hidden");
@@ -67,20 +63,20 @@ function userSignIn() {
 
 function getPageData(userID) {
   return fetchAPI.getAllInfo(userID).then(allData => {
-    travelersData = allData[0].travelers;
+    let travelersData = allData[0].travelers;
     tripsData = allData[1].trips;
     destinationsData = allData[2].destinations;
     travelerInfo = allData[3];
     let tripRepository = new TripsRepo(travelerInfo, tripsData);
-    let travelerTrips= tripRepository.findTravelersTrips();
+    let travelerTrips = tripRepository.findTravelersTrips();
     currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
     getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData);
     applyTravelerInfo(currentTraveler);
   })
 }
 
-function getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData) {
-  currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+function getCurrentTravelerInfo() {
+  // currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
   currentTraveler.findPresentTrips();
   currentTraveler.findPastTrips();
   currentTraveler.findFutureTrips();
@@ -148,11 +144,25 @@ function clickEstimateCosts() {
   }
 }
 
+
 function clickSubmitTrip() {
   if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
   fetchAPI.postTrip(currentTraveler, destinationSelector, numberOfTravelersInput, tripDateInput, tripDurationInput);
-  getPageData();
   showTripHistoryView();
   domUpdates.resetPlanTripForm();
+  refreshData();
   }
+}
+
+function refreshData() {
+  return fetchAPI.getAllInfo(currentTraveler.id).then(upData => {
+    let travelersData = upData[0].travelers;
+    tripsData = upData[1].trips;
+    destinationsData = upData[2].destinations;
+    travelerInfo = upData[3];
+    let tripRepository = new TripsRepo(travelerInfo, tripsData);
+    let travelerTrips = tripRepository.findTravelersTrips();
+    currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+    getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData);
+  })
 }

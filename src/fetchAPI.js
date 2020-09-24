@@ -1,8 +1,11 @@
+import Traveler from './traveler.js';
+import TripsRepo from './tripsRepo.js';
+import domUpdates from './domUpdates.js';
+
 const fetchApi = {
-  
+
   getAllInfo(userID) {
-    let travelerID = userID;
-    return Promise.all([this.getTravelers(), this.getTrips(), this.getDestinations(), this.getTraveler(travelerID)])
+    return Promise.all([this.getTravelers(), this.getTrips(), this.getDestinations(), this.getTraveler(userID)])
   },
 
   getTravelers() {
@@ -13,7 +16,7 @@ const fetchApi = {
 
   getTraveler(id) {
     const loneTraveler = fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${id}`)
-        .then(response => response.json())
+      .then(response => response.json())
     return loneTraveler;
   },
 
@@ -29,31 +32,35 @@ const fetchApi = {
     return bestDestinations;
   },
 
+  promiseTrips() {
+    return Promise.all([this.getTrips()]);
+  },
+
   postTrip(currentTraveler, destinationSelector, numberOfTravelersInput, tripDateInput, tripDurationInput) {
-   console.log(currentTraveler);
-   let postData = {
-     id: Date.now(),
-     userID: currentTraveler.id,
-     destinationID: parseInt(destinationSelector.value),
-     travelers: parseInt(numberOfTravelersInput.value),
-     date: tripDateInput.value.replace(/-/g, '/'),
-     duration: parseInt(tripDurationInput.value),
-     status: 'pending',
-     suggestedActivities: [],
-   };
+    console.log(currentTraveler);
+    let postData = {
+      id: Date.now(),
+      userID: currentTraveler.id,
+      destinationID: parseInt(destinationSelector.value),
+      travelers: parseInt(numberOfTravelersInput.value),
+      date: tripDateInput.value.replace(/-/g, '/'),
+      duration: parseInt(tripDurationInput.value),
+      status: 'pending',
+      suggestedActivities: [],
+    };
 
-   let postString = JSON.stringify(postData)
+    let postString = JSON.stringify(postData)
 
-   return fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
-     method: 'POST',
-     body: postString,
-     headers: {
-       'Content-Type':'application/json'
-     }})
-     .then(response => response.json())
-     .then(response => console.log(`Object with id ${postData.id} successfully posted, newResource: ${JSON.stringify(postData)}`))
-     .catch(err => console.log('Danger, there was a malfunction with your attempt at success... in posting.'));
-    }
+    return fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
+      method: 'POST',
+      body: postString,
+      headers: {
+        'Content-Type': 'application/json'
+       }})
+      .then(response => response.json())
+      .then(response => console.log(`Object with id ${postData.id} successfully posted, newResource: ${JSON.stringify(postData)}`))
+      .catch(err => console.log('Danger, there was a malfunction with your attempt at success... in posting.'));
+  }
 
 }
 

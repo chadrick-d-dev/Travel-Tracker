@@ -1,3 +1,9 @@
+import Traveler from './traveler.js';
+import TripsRepo from './tripsRepo.js';
+import fetchApi from './fetchAPI.js';
+import destinationsData from './scripts.js';
+import currentTraveler from './scripts.js';
+
 const domUpdates = {
 
   welcomeTraveler(currentTraveler) {
