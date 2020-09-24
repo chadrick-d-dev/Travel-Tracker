@@ -1,16 +1,13 @@
 
 // ************ IMPORTED FILES *************** //
 
+import './css/styles.scss';
 import fetchAPI from './fetchAPI.js'
-import domUpdats from './domUpdates.js'
 import TripsRepo from './tripsRepo.js';
 import Traveler from './traveler.js';
-import './css/styles.scss';
-// import domUpdates from './domUpdates'
+import domUpdates from './domUpdates.js'
 // ************ QUERY SELECTORS *************** //
 
-let userView = document.querySelector(".user-view");
-let signOutButton = document.querySelector(".sign-out-button");
 let yearTravelCostAmount = document.querySelector(".year-travel-cost-amount");
 let pageViewTitle = document.querySelector(".page-view-title");
 let planNewTripButton = document.querySelector(".plan-new-trip-button");
@@ -27,15 +24,12 @@ let tripDateInput = document.querySelector(".trip-date-input");
 let tripDurationInput = document.querySelector(".trip-duration-input");
 let numberOfTravelersInput = document.querySelector(".number-of-travelers-input");
 let destinationSelector = document.querySelector(".destination-selector");
-let newTripCost = document.querySelector(".new-trip-cost");
-let newTripAgentFee = document.querySelector(".new-trip-agent-fee");
-let newTripTotal = document.querySelector(".new-trip-total");
+let estimatedCostsButton = document.querySelector(".estimated-costs-button");
 let submitTripButton = document.querySelector(".submit-trip-button");
 let signInPageView = document.querySelector(".sign-in-page-view");
 let usernameInput = document.querySelector(".username-input");
 let passwordInput = document.querySelector(".password-input");
 let signInButton = document.querySelector(".sign-in-button");
-
 
 // ************ GLOBAL VARIABLES *************** //
 let travelersData;
@@ -51,12 +45,15 @@ window.onload = getPageData();
 signInButton.addEventListener("click", signInShowMain);
 planNewTripButton.addEventListener("click", showPlanNewTripView);
 viewTripHistoryButton.addEventListener("click", showTripHistoryView);
-submitTripButton.addEventListener('mouseover', preventSubmitClick);
-planNewTripView.addEventListener('mouseover', enableSubmitClick);
+// planNewTripView.addEventListener("click", enableSubmitClick);
+estimatedCostsButton.addEventListener("click", clickEstimateCosts);
 submitTripButton.addEventListener("click", clickSubmitTrip);
 
 
+
 // ************ FETCH REQUESTS/MAIN DATA *************** //
+
+//will need to refactor this function when receiving different travelerIDs and move this into sign in click
 function getPageData() {
   return fetchAPI.getAllInfo().then(allData => {
     travelersData = allData[0].travelers;
@@ -66,10 +63,15 @@ function getPageData() {
     let tripRepository = new TripsRepo(travelerInfo, tripsData);
     let travelerTrips= tripRepository.findTravelersTrips();
     currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
+    getCurrentTravelerInfo();
+    console.log(currentTraveler);
+    applyTravelerInfo(currentTraveler);
+
   })
 }
 
 function signInShowMain() {
+  let userView = document.querySelector(".user-view");
   userView.classList.remove("hidden");
   signInPageView.classList.add("hidden");
 }
@@ -78,7 +80,9 @@ function showPlanNewTripView() {
   planNewTripView.classList.remove("hidden");
   viewTripHistoryButton.classList.remove("hidden");
   tripHistoryView.classList.add("hidden");
+
   planNewTripButton.classList.add("hidden");
+  console.log(currentTraveler)
 }
 
 function showTripHistoryView() {
@@ -88,19 +92,26 @@ function showTripHistoryView() {
   viewTripHistoryButton.classList.add("hidden");
 }
 
-function clickSubmitTrip() {
-  showTripHistoryView();
+function clickEstimateCosts() {
+  if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
+    domUpdates.displayNewTripCost(currentTraveler, numberOfTravelersInput, destinationSelector, tripDurationInput, destinationsData);
+    submitTripButton.disabled = false;
+  }
 }
 
-function preventSubmitClick() {
-  if (tripDateInput.value === "mm/dd/yyyy" || tripDurationInput.value === "" || numberOfTravelersInput.value === "" || destinationSelector.value === "0") {
-     submitTripButton.disabled = true;
-   }
+function clickSubmitTrip() {
+  if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
+  showTripHistoryView();
   }
+}
+function getCurrentTravelerInfo() {
+  currentTraveler.findPresentTrips();
+  currentTraveler.findPastTrips();
+  currentTraveler.findFutureTrips(); currentTraveler.findPendingTrips();
+  currentTraveler.findYearToDateTrips();
+}
 
-function enableSubmitClick() {
-    if (tripDateInput.value !== "mm/dd/yyyy" && tripDurationInput.value !== "" && numberOfTravelersInput.value !== "" && destinationSelector.value !== "0") {
-     submitTripButton.disabled = false;
-     submitTripButton.classList.add("cursor")
-    }
-  }
+function applyTravelerInfo(currentTraveler) {
+  domUpdates.welcomeTraveler(currentTraveler);
+  domUpdates.displayYearTotal(currentTraveler);
+}
