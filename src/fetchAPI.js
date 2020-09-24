@@ -1,6 +1,7 @@
 const fetchApi = {
-  getAllInfo() {
-    let travelerID = 2;
+  
+  getAllInfo(userID) {
+    let travelerID = userID;
     return Promise.all([this.getTravelers(), this.getTrips(), this.getDestinations(), this.getTraveler(travelerID)])
   },
 

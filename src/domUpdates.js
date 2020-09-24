@@ -1,9 +1,3 @@
-import Traveler from './traveler.js'
-import TripsRepo from './tripsRepo.js'
-import fetchAPI from './fetchAPI.js'
-import destinationsData from './scripts.js';
-// import currentTraveler from './scripts.js';
-
 const domUpdates = {
 
   welcomeTraveler(currentTraveler) {
@@ -80,6 +74,14 @@ const domUpdates = {
     tripCardGrid.innerHTML += `<section class="no-trips-message">
       <p>The World is Waiting for You! No trip history of this type.<p>
     </section>`
+  },
+
+  showPlanTripTitle() {
+    document.querySelector(".page-view-title").innerText = "Plan Your Next Adventure";
+  },
+
+  showTripHistoryTitle() {
+    document.querySelector(".page-view-title").innerText = "Trip History";
   },
 
   displayNewTripCost(currentTraveler, numberOfTravelersInput, destinationSelector, tripDurationInput, destinationsData) {

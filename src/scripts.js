@@ -9,11 +9,9 @@ import domUpdates from './domUpdates.js'
 // ************ QUERY SELECTORS *************** //
 
 let yearTravelCostAmount = document.querySelector(".year-travel-cost-amount");
-let pageViewTitle = document.querySelector(".page-view-title");
 let planNewTripButton = document.querySelector(".plan-new-trip-button");
 let viewTripHistoryButton = document.querySelector(".view-trip-history-button");
 let tripHistoryView = document.querySelector(".trip-history-view");
-
 let pastTripsButton = document.querySelector(".view-past-trips-button");
 let presentTripsButton = document.querySelector(".view-present-trips-button");
 let futureTripsButton = document.querySelector(".view-future-trips-button");
@@ -26,9 +24,6 @@ let numberOfTravelersInput = document.querySelector(".number-of-travelers-input"
 let destinationSelector = document.querySelector(".destination-selector");
 let estimatedCostsButton = document.querySelector(".estimated-costs-button");
 let submitTripButton = document.querySelector(".submit-trip-button");
-let signInPageView = document.querySelector(".sign-in-page-view");
-let usernameInput = document.querySelector(".username-input");
-let passwordInput = document.querySelector(".password-input");
 let signInButton = document.querySelector(".sign-in-button");
 
 // ************ GLOBAL VARIABLES *************** //
@@ -42,7 +37,7 @@ let currentTraveler;
 
 // ************ EVENT LISTENERS *************** //
 
-signInButton.addEventListener("click", signInShowMain);
+signInButton.addEventListener("click", userSignIn);
 pastTripsButton.addEventListener("click", showPastTrips);
 presentTripsButton.addEventListener("click", showPresentTrips);
 futureTripsButton.addEventListener("click", showFutureTrips);
@@ -55,10 +50,23 @@ submitTripButton.addEventListener("click", clickSubmitTrip);
 
 
 // ************ FETCH REQUESTS/MAIN DATA *************** //
+function userSignIn() {
+  let usernameInput = document.querySelector(".username-input");
+  let passwordInput = document.querySelector(".password-input");
+  let takeID = usernameInput.value.match(/\d+/g);
+  let userID = takeID[0];
+  if (!usernameInput.value.includes("traveler") && userID >= 1 && userID <= 50 && passwordInput.value !== "travel2020") {
+    signInButton.disabled = true;
+  }else {
+    signInButton.disabled = false;
+    getPageData(userID);
+    document.querySelector(".user-view").classList.remove("hidden");
+    document.querySelector(".sign-in-page-view").classList.add("hidden");
+   }
+}
 
-//will need to refactor this function when receiving different travelerIDs and move this into sign in click
-function getPageData() {
-  return fetchAPI.getAllInfo().then(allData => {
+function getPageData(userID) {
+  return fetchAPI.getAllInfo(userID).then(allData => {
     travelersData = allData[0].travelers;
     tripsData = allData[1].trips;
     destinationsData = allData[2].destinations;
@@ -67,16 +75,8 @@ function getPageData() {
     let travelerTrips= tripRepository.findTravelersTrips();
     currentTraveler = new Traveler(travelerInfo, travelerTrips, destinationsData);
     getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData);
-    console.log(currentTraveler);
     applyTravelerInfo(currentTraveler);
   })
-}
-
-function signInShowMain() {
-  let userView = document.querySelector(".user-view");
-  userView.classList.remove("hidden");
-  signInPageView.classList.add("hidden");
-  getPageData();
 }
 
 function getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData) {
@@ -86,7 +86,6 @@ function getCurrentTravelerInfo(travelerInfo, travelerTrips, destinationsData) {
   currentTraveler.findFutureTrips();
   currentTraveler.findPendingTrips();
   currentTraveler.findYearToDateTrips();
-  console.log(currentTraveler.pastTrips.length);
 }
 
 function applyTravelerInfo(currentTraveler) {
@@ -130,9 +129,8 @@ function showPlanNewTripView() {
   planNewTripView.classList.remove("hidden");
   viewTripHistoryButton.classList.remove("hidden");
   tripHistoryView.classList.add("hidden");
-
   planNewTripButton.classList.add("hidden");
-  console.log(currentTraveler)
+  domUpdates.showPlanTripTitle()
 }
 
 function showTripHistoryView() {
@@ -140,6 +138,7 @@ function showTripHistoryView() {
   planNewTripButton.classList.remove("hidden");
   planNewTripView.classList.add("hidden");
   viewTripHistoryButton.classList.add("hidden");
+  domUpdates.showTripHistoryTitle();
 }
 
 function clickEstimateCosts() {
@@ -147,7 +146,6 @@ function clickEstimateCosts() {
     domUpdates.displayNewTripCost(currentTraveler, numberOfTravelersInput, destinationSelector, tripDurationInput, destinationsData);
     submitTripButton.disabled = false;
   }
-  console.log(tripDateInput.value);
 }
 
 function clickSubmitTrip() {

@@ -16,18 +16,18 @@
   <body>
     <main class="user-view hidden">
       <header class="main-header">
-          <h1 class="travel-tracker-title">Travel Tracker</h1>
-          <h1 class="welcome-banner">Welcome</h1>
+          <pageViewTitle class="travel-tracker-title">Travel Tracker</pageViewTitle>
+          <h2 class="welcome-banner">Welcome</h2>
       </header>
-      <header class="view-header">
-        <section class="year-travel-cost-widget" aria->
+      <section class="view-header">
+        <section class="year-travel-cost-widget">
           <h3 class="year-travel-cost-title">Year to Date Travel Cost</h3>
           <p class="year-travel-cost-amount">$$$<p>
         </section>
         <h1 class="page-view-title">Trip History</h1>
         <button class="plan-new-trip-button" type="button" name="button">Plan New Trip</button>
         <button class="view-trip-history-button hidden" type="button" name="button">View Trip History</button>
-      </header>
+      </section>
       <section class="trip-history-view">
         <nav class="trip-by-time-button-navigator">
           <button class="view-past-trips-button nav-button" type="button" name="past-trips-button">Past Trips</button>
@@ -116,10 +116,10 @@
     <section class="sign-in-page-view">
       <h1>Welcome to Travel Tracker!</h1>
       <form class="sign-in-form" action="index.html" method="post">
-        <label for="username-input">Enter Username</label>
-        <input type="text" class="username-input" name="username" value=""><br>
-        <label for="password-input">Enter Password</label>
-        <input type="password" class="password-input" name="password" value=""><br>
+        <label for="username-input">Username:
+        <input type="text" class="username-input" name="username" value=""></label>
+        <label for="password-input">Password:
+        <input type="password" class="password-input" name="password" value=""></label>
         <button class="sign-in-button" type="button" name="button">Click to Sign In</button>
       </form>
     </section>
